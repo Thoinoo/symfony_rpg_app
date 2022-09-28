@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CharacterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +29,14 @@ class Character
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Type $Type = null;
+
+    #[ORM\ManyToMany(targetEntity: Skill::class)]
+    private Collection $skill;
+
+    public function __construct()
+    {
+        $this->skill = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,6 +87,30 @@ class Character
     public function setType(?Type $Type): self
     {
         $this->Type = $Type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkill(): Collection
+    {
+        return $this->skill;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skill->contains($skill)) {
+            $this->skill->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skill->removeElement($skill);
 
         return $this;
     }
