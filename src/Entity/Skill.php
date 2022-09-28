@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeRepository;
+use App\Repository\SkillRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type
+#[ORM\Entity(repositoryClass: SkillRepository::class)]
+class Skill
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,10 +47,5 @@ class Type
         $this->description = $description;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 }

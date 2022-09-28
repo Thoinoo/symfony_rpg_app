@@ -24,6 +24,10 @@ class Character
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Type $Type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +65,18 @@ class Character
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->Type;
+    }
+
+    public function setType(?Type $Type): self
+    {
+        $this->Type = $Type;
 
         return $this;
     }
