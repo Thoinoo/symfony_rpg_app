@@ -26,6 +26,7 @@ class TypeController extends AbstractController
         ]);
     }
 
+    /*
     #[Route('/type/{id}',  name: 'app_type_show', requirements: ['id' => '\d+'])]
     public function show(TypeRepository $repo, Request $request, $id): Response
     {
@@ -39,7 +40,7 @@ class TypeController extends AbstractController
         return $this->render('type/show.html.twig', [
             'type' => $type
         ]);
-    }
+    }*/
 
 
     #[Route('/type/new', name: 'app_type_add')]

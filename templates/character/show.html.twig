@@ -7,6 +7,8 @@
 	<ul>
 		<li>Nom :
 			{{ character.name }}</li>
+		<li>Niveau :
+			{{ character.level }}</li>
 		<li>Date de naissance :
 			{{ character.birthdate | date('d-m-y') }}</li>
 		<li>Description :
@@ -20,7 +22,18 @@
 						{{ skill }}
 					</li>
 				{% endfor %}
-			</li>
+			</ul>
 		</li>
+		<li>experience :
+			{{ character.experience }}
+			xp</li>
+		<li>Vie :
+			{{ character.health }}
+			pv</li>
 	</ul>
-</li></ul><a href="/character/delete/{{ character.id }}">supprimer</a><a href="/character/edit/{{ character.id }}">modifier</a><p></p><a href="/">Home Page</a>{% endblock %}
+
+	<a href="/character/delete/{{ character.id }}">supprimer</a>
+	<a href="/character/edit/{{ character.id }}">modifier</a>
+	<p></p>
+	<a href="/">Home Page</a>
+{% endblock %}
