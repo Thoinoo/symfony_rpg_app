@@ -33,6 +33,15 @@ class Character
     #[ORM\ManyToMany(targetEntity: Skill::class)]
     private Collection $skill;
 
+    #[ORM\Column]
+    private ?int $level = null;
+
+    #[ORM\Column]
+    private ?int $experience = null;
+
+    #[ORM\Column]
+    private ?int $health = null;
+
     public function __construct()
     {
         $this->skill = new ArrayCollection();
@@ -111,6 +120,42 @@ class Character
     public function removeSkill(Skill $skill): self
     {
         $this->skill->removeElement($skill);
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getExperience(): ?int
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(int $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getHealth(): ?int
+    {
+        return $this->health;
+    }
+
+    public function setHealth(int $health): self
+    {
+        $this->health = $health;
 
         return $this;
     }
