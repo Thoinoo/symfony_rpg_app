@@ -1,0 +1,22 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Hello CharacterController!
+{% endblock %}
+
+{% block body %}
+	<ul>
+		<li>Nom :
+			{{ character.name }}</li>
+		<li>Date de naissance :
+			{{ character.birthdate | date('d-m-y') }}</li>
+		<li>Description :
+			{{ character.description }}</li>
+	</ul>
+	<a href="/character/delete/{{ character.id }}">supprimer</a>
+	<a href="/character/edit/{{ character.id }}">modifier</a>
+	<p></p>
+	<a href="/character">Retour</a>
+	<a href="/">Home Page</a>
+
+
+{% endblock %}
