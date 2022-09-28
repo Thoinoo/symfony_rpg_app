@@ -18,20 +18,23 @@ class CharacterController extends AbstractController
     #[Route('/', name: 'home_page')]
     public function home(CharacterRepository $repo, Request $request): Response
     {
-        return $this->render('index.html.twig');
+        $characters = $repo->findAll();
+
+        return $this->render('index.html.twig', [
+            'characters' => $characters
+        ]);
     }
 
+    /*
     #[Route('/character', name: 'app_character')]
     public function index(CharacterRepository $repo, Request $request): Response
     {
         $characters = $repo->findAll();
 
-
-
         return $this->render('character/index.html.twig', [
             'characters' => $characters
         ]);
-    }
+    }*/
 
     #[Route('/character/{id}',  name: 'app_character_show', requirements: ['id' => '\d+'])]
     public function show(CharacterRepository $repo, Request $request, $id): Response
@@ -60,7 +63,7 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $repo->save($character, true);
-            return $this->redirectToRoute('app_character');
+            return $this->redirectToRoute('home_page');
         }
 
         return $this->render('character/add.html.twig', [
@@ -85,7 +88,7 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted()) {
             $repo->remove($character, true);
-            return $this->redirectToRoute('app_character');
+            return $this->redirectToRoute('home_page');
         }
 
 

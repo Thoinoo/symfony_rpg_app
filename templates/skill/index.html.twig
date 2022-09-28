@@ -9,18 +9,18 @@
 			<td>Nom</td>
 			<td>Niveau</td>
 		</tr>
-		{% for type in types %}
+		{% for skill in skills %}
 			<tr>
-				<td>{{ type.name }}</td>
-				<td>{{ type.description }}</td>
+				<td>{{ skill.name }}</td>
+				<td>{{ skill.description }}</td>
 				<td>
-					<a type="button" href="type/edit/{{ type.id }}">modifer</a>
-					<a type="button" href="type/delete/{{ type.id }}">supprimer</a>
+					<a type="button" href="skill/edit/{{ skill.id }}">modifer</a>
+					<a type="button" href="skill/delete/{{ skill.id }}">supprimer</a>
 				</td>
 			</tr>
 		{% endfor %}
 
-		<a href="/type/new">Ajouter</a>
+		<a href="/skill/new">Ajouter</a>
 	</table>
 	<p></p>
 	<a href="/">Retour</a>

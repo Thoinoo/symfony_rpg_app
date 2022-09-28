@@ -13,12 +13,14 @@
 			{{ character.description }}</li>
 		<li>Classe :
 			{{ character.type }}</li>
+		<li>Compétences :
+			<ul>
+				{% for skill in character.skill %}
+					<li>
+						{{ skill }}
+					</li>
+				{% endfor %}
+			</li>
+		</li>
 	</ul>
-	<a href="/character/delete/{{ character.id }}">supprimer</a>
-	<a href="/character/edit/{{ character.id }}">modifier</a>
-	<p></p>
-	<a href="/character">Retour</a>
-	<a href="/">Home Page</a>
-
-
-{% endblock %}
+</li></ul><a href="/character/delete/{{ character.id }}">supprimer</a><a href="/character/edit/{{ character.id }}">modifier</a><p></p><a href="/">Home Page</a>{% endblock %}

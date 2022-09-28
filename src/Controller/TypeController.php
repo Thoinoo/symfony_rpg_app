@@ -68,25 +68,16 @@ class TypeController extends AbstractController
         $type = new Type;
 
         if ($type = $repo->findOneBy(['id' =>  $id])) {
-            $form = $this->createForm(TypeType::class, $type);
-            $form->add('valider_la_supression', SubmitType::class);
-        } else {
-            return new Response('l\'id n\'éxiste pas');
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
+            //verifier que le type n'est lié à aucun personnage
             $repo->remove($type, true);
-            return $this->redirectToRoute('app_type');
+        } else {
+            return $this->render('error.html', [
+                'message' => "l'id n'existe pas",
+                'url' => '/'
+            ]);
         }
 
-
-
-
-        return $this->render('type/delete.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->redirectToRoute('app_type');
     }
 
     #[Route('/type/edit/{id}',  name: 'app_type_edit', requirements: ['id' => '\d+'])]
@@ -110,16 +101,16 @@ class TypeController extends AbstractController
 
         //test les bouttons cliqué
         if ($form->get('cancel')->isClicked()) {
-            return $this->redirectToRoute('app_type_show', array('id' => $id));
+            return $this->redirectToRoute('app_type', array('id' => $id));
         } elseif ($form->get('validate')->isClicked() && $form->isValid()) {
             $repo->save($type, true);
-            return $this->redirectToRoute('app_type_show', array('id' => $id));
+            return $this->redirectToRoute('app_type', array('id' => $id));
         }
 
 
 
 
-        return $this->render('type/delete.html.twig', [
+        return $this->render('type/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

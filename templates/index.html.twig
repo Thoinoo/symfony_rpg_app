@@ -21,9 +21,27 @@
 		<ul>
 			<li>
 				<h3>Personnages</h3>
+				<table>
+					<tr>
+						<td>Nom</td>
+						<td>Niveau</td>
+					</tr>
+					{% for character in characters %}
+						<tr>
+							<td>{{ character.name }}</td>
+							<td>{{ character.description }}</td>
+							<td>
+								<a type="button" href="character/{{ character.id }}">Afficher les détails</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+
 				<ul>
-					<li><a href="/character">Afficher mes personnages</a></li>
-					<li><a href="/character/new">Ajouter un personnages</a></li>
+					<p></p>
+					<li>
+						<a href="/character/new">Ajouter un personnages</a>
+					</li>
 				</ul>
 			</li>
 			<li>

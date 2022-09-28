@@ -16,6 +16,7 @@ class CharacterType extends AbstractType
             ->add('birthdate')
             ->add('description')
             ->add('Type')
+            ->add('skill')
         ;
     }
 
