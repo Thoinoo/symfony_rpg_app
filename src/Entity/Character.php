@@ -42,6 +42,9 @@ class Character
     #[ORM\Column]
     private ?int $health = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilPicture = null;
+
     public function __construct()
     {
         $this->skill = new ArrayCollection();
@@ -156,6 +159,18 @@ class Character
     public function setHealth(int $health): self
     {
         $this->health = $health;
+
+        return $this;
+    }
+
+    public function getProfilPicture(): ?string
+    {
+        return $this->profilPicture;
+    }
+
+    public function setProfilPicture(?string $profilPicture): self
+    {
+        $this->profilPicture = $profilPicture;
 
         return $this;
     }

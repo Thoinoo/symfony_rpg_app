@@ -6,6 +6,9 @@ use App\Entity\Character;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CharacterType extends AbstractType
 {
@@ -13,14 +16,30 @@ class CharacterType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('birthdate')
+            ->add('birthdate', DateType::class, array(
+                'years' => range(date('Y'), date('Y')-500)
+            ))
             ->add('description')
             ->add('level')
             ->add('experience')
             ->add('health')
             ->add('Type')
             ->add('skill')
-        ;
+            ->add('profilPicture', FileType::class, [
+                'label' => 'image de profil',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10000k',
+                        /*   'mimeTypes' => [
+                            'application/jpg',
+                            'application/jpeg',
+                        ],  */
+                        'mimeTypesMessage' => 'veuillez upload une image jpg/jpeg'
+                    ])
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
