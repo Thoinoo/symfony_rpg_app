@@ -22,6 +22,13 @@ use Symfony\Component\Filesystem\Filesystem;
 class CharacterController extends AbstractController
 {
 
+/*
+	#[Route($this->getParameter('ProfilePicture_directory') . '{fileName}'  )]
+	public function getMedia($fileName){
+		$filesystem = new Filesystem();
+		$filesystem->get
+		return 
+	}*/
 
     #[Route('/', name: 'home_page')]
     public function home(CharacterRepository $repo, Request $request): Response
