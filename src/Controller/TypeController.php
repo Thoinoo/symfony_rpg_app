@@ -9,7 +9,9 @@ use App\Repository\TypeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Type;
 use App\Form\TypeType;
+use App\Repository\CharacterRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
 
 class TypeController extends AbstractController
 {
@@ -25,22 +27,6 @@ class TypeController extends AbstractController
             'types' => $types
         ]);
     }
-
-    /*
-    #[Route('/type/{id}',  name: 'app_type_show', requirements: ['id' => '\d+'])]
-    public function show(TypeRepository $repo, Request $request, $id): Response
-    {
-        $type = new Type();
-        if (!($type = $repo->findOneBy(['id' => $id]))) {
-            return new Response('le personnage n\'existe pas');
-        }
-
-
-
-        return $this->render('type/show.html.twig', [
-            'type' => $type
-        ]);
-    }*/
 
 
     #[Route('/type/new', name: 'app_type_add')]
@@ -64,17 +50,34 @@ class TypeController extends AbstractController
 
 
     #[Route('/type/delete/{id}',  name: 'app_type_remove', requirements: ['id' => '\d+'])]
-    public function remove(TypeRepository $repo, Request $request, $id): Response
+    public function remove(TypeRepository $repoType,CharacterRepository $repoCharacter, Request $request, $id): Response
     {
         $type = new Type;
 
-        if ($type = $repo->findOneBy(['id' =>  $id])) {
+        if ($type = $repoType->findOneBy(['id' =>  $id])) {
             //verifier que le type n'est lié à aucun personnage
-            $repo->remove($type, true);
+
+            $listCharacter = $repoCharacter->findBy(['Type' => $id]);
+            $length = count($listCharacter);
+            $list = "";
+            foreach ($listCharacter as $c){
+                $list = $list . $c->getName() . ", "; 
+            }
+
+            if ($length > 0){
+                return $this->render('error.html.twig',[
+                    'message' =>  $length . ' personnage(s) sont liés à cette classe : ' .  $list  . ' supprimez le(s) personnage(s) avant de pouvoir supprimer la classe',
+                    'url' => '/type',
+                    'urlname' => 'Classes'
+                ]);
+            }else{
+                $repoType->remove($type, true);
+            }
         } else {
-            return $this->render('error.html', [
-                'message' => "l'id n'existe pas",
-                'url' => '/'
+            return $this->render('error.html.twig', [
+                'message' => 'l\'id n\'existe pas',
+                'url' => '/type',
+                'urlname' => 'Retour à la page des Classes'
             ]);
         }
 
@@ -94,7 +97,8 @@ class TypeController extends AbstractController
         } else {
             return $this->render('error.html.twig', [
                 'message' => "l'id n'éxiste pas",
-                'url' => "/"
+                'url' => "/type",
+                'urlname' => 'Retour à la page des Classes'
             ]);
         }
 

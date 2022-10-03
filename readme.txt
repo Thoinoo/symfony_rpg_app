@@ -16,4 +16,3 @@ php bin/console doctrine:migration:migrate
 
 lancer le server :
 symfony server:start
-

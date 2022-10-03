@@ -3,12 +3,13 @@
 {% block title %}Hello CharacterController!
 {% endblock %}
 
+
 {% block body %}
 	<ul>
-		<li>
-			 <img src="{{ asset('public/uploads/profilpicture/2Q-63386ccf9caa6.jpg') }}"> 
-			 
-		</li>
+		
+			<img src="{{ ( asset(profilPicture)) }}">
+
+		
 		<li>Nom :
 			{{ character.name }}</li>
 		<li>Niveau :

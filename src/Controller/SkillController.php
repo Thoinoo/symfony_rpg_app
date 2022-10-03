@@ -26,22 +26,7 @@ class SkillController extends AbstractController
         ]);
     }
 
-    /*
-    #[Route('/skill/{id}',  name: 'app_skill_show', requirements: ['id' => '\d+'])]
-    public function show(SkillRepository $repo, Request $request, $id): Response
-    {
-        $skill = new Skill();
-        if (!($skill = $repo->findOneBy(['id' => $id]))) {
-            return new Response('le personnage n\'existe pas');
-        }
-
-
-
-        return $this->render('skill/show.html.twig', [
-            'skill' => $skill
-        ]);
-    }*/
-
+ 
 
     #[Route('/skill/new', name: 'app_skill_add')]
     public function add(SkillRepository $repo, Request $request): Response
@@ -71,17 +56,17 @@ class SkillController extends AbstractController
         if ($skill = $repo->findOneBy(['id' =>  $id])) {
             $repo->remove($skill, true);
         } else {
-            return new Response('l\'id n\'éxiste pas');
+            return $this->render('error.html.twig', [
+                'message' => 'l\'id n\'existe pas',
+                'url' => '/skill',
+                'urlname' => 'Retour à la page compétances'
+            ]);
         }
-
-
-
-
-
-
 
         return $this->redirectToRoute('app_skill');
     }
+
+
 
     #[Route('/skill/edit/{id}',  name: 'app_skill_edit', requirements: ['id' => '\d+'])]
     public function edit(SkillRepository $repo, Request $request, $id): Response
@@ -95,8 +80,9 @@ class SkillController extends AbstractController
             $form->add('cancel', SubmitType::class);
         } else {
             return $this->render('error.html.twig', [
-                'message' => "l'id n'éxiste pas",
-                'url' => "/"
+                'message' => 'l\'id n\'existe pas',
+                'url' => '/',
+                'urlname' => 'Page d\'accueil'
             ]);
         }
 

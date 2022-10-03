@@ -18,17 +18,11 @@ use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 class CharacterController extends AbstractController
 {
 
-/*
-	#[Route($this->getParameter('ProfilePicture_directory') . '{fileName}'  )]
-	public function getMedia($fileName){
-		$filesystem = new Filesystem();
-		$filesystem->get
-		return 
-	}*/
 
     #[Route('/', name: 'home_page')]
     public function home(CharacterRepository $repo, Request $request): Response
@@ -40,16 +34,6 @@ class CharacterController extends AbstractController
         ]);
     }
 
-    /*
-    #[Route('/character', name: 'app_character')]
-    public function index(CharacterRepository $repo, Request $request): Response
-    {
-        $characters = $repo->findAll();
-
-        return $this->render('character/index.html.twig', [
-            'characters' => $characters
-        ]);
-    }*/
 
     #[Route('/character/{id}',  name: 'app_character_show', requirements: ['id' => '\d+'])]
     public function show(CharacterRepository $repo, Request $request, $id): Response
@@ -62,22 +46,10 @@ class CharacterController extends AbstractController
                 'urlname' => 'page d\'accueil'
             ]);
         }
-
-        //$package = new Package(new EmptyVersionStrategy());
-
-            // Absolute path
-            //echo $package->getUrl('/image.png');
-            // result: /image.png
-
-            // Relative path 
-            //echo $package->getUrl($character->getProfilPicture());
-            // result: image.png
-
-          //  $profilePicturePath =   $this->getParameter('ProfilePicture_directory'); // . "/" .  $character->getProfilPicture() ;
-
+        
         return $this->render('character/show.html.twig', [
-            'character' => $character
-           // 'profilPicture' => $profilePicturePath
+            'character' => $character,
+            'profilPicture' => $this->getParameter('Public_ProfilePicture_directory') . "/" . $character->getProfilPicture()
         ]);
     }
 
@@ -94,9 +66,9 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($character->getType() == null) {
                 return $this->render('error.html.twig', [
-                    'message' => 'Aucun type n\'a été attribué, peut-être qu\'aucun type n\'a encore été créé',
+                    'message' => 'Aucune Classe n\'a été attribué, peut-être qu\'aucune Classe n\'a encore été créé',
                     "url" => '/type',
-                    'urlname' => 'Afficher les types'
+                    'urlname' => 'Afficher les Classes'
                 ]);
             } else {
                 $profilePictureFile =  $form->get('profilPicture')->getData();
@@ -134,23 +106,19 @@ class CharacterController extends AbstractController
     #[Route('/character/delete/{id}',  name: 'app_character_remove', requirements: ['id' => '\d+'])]
     public function remove(CharacterRepository $repo, Request $request, $id): Response
     {
-       // $character = new Character;
 
         if ($character = $repo->findOneBy(['id' =>  $id])) {
-           // $form = $this->createForm(CharacterType::class, $character);
-           // $form->add('valider_la_supression', SubmitType::class);
+
            $filesystem = new Filesystem();
 
            try{
                 $filesystem->remove($this->getParameter('ProfilePicture_directory') . '/' . $character->getProfilPicture());
-
-                $repo->remove($character, true);
-        return $this->redirectToRoute('home_page');
-
            }catch (IOExceptionInterface $e){
             echo "Une erreur est survenue lors de la suppression de l'image de profil : " . $e->getPath();
-
            }
+
+            $repo->remove($character, true);
+            return $this->redirectToRoute('home_page');
 
            
         } else {
@@ -177,7 +145,8 @@ class CharacterController extends AbstractController
         } else {
             return $this->render('error.html.twig', [
                 'message' => "l'id n'éxiste pas",
-                'url' => "/"
+                'url' => "/",
+                'urlname' => 'Page d\'accueil'
             ]);
         }
 
@@ -213,13 +182,16 @@ class CharacterController extends AbstractController
                     }
                     $character->setProfilPicture($newFileName);
 
-					$repo->save($character, true);
-					return $this->redirectToRoute('app_character_show', array('id' => $id));
+					
 				}
+                $repo->save($character, true);
+					return $this->redirectToRoute('app_character_show', array('id' => $id));
 
 		}
-		return $this->render('character/delete.html.twig', [
+		return $this->render('character/edit.html.twig', [
 			'form' => $form->createView()
 		]);
-}
+    }
+
+
 }
