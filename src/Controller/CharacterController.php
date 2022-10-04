@@ -40,13 +40,13 @@ class CharacterController extends AbstractController
     {
         $character = new Character();
         if (!($character = $repo->findOneBy(['id' => $id]))) {
-            return $this->render('error.html.twig',[
+            return $this->render('error.html.twig', [
                 'message' => 'Le personnage n\'existe pas',
                 'url' => '/',
                 'urlname' => 'page d\'accueil'
             ]);
         }
-        
+
         return $this->render('character/show.html.twig', [
             'character' => $character,
             'profilPicture' => $this->getParameter('Public_ProfilePicture_directory') . "/" . $character->getProfilPicture()
@@ -89,8 +89,6 @@ class CharacterController extends AbstractController
                         ]);
                     }
                     $character->setProfilPicture($newFileName);
-
-                    
                 }
                 $repo->save($character, true);
                 return $this->redirectToRoute('home_page');
@@ -109,26 +107,23 @@ class CharacterController extends AbstractController
 
         if ($character = $repo->findOneBy(['id' =>  $id])) {
 
-           $filesystem = new Filesystem();
+            $filesystem = new Filesystem();
 
-           try{
+            try {
                 $filesystem->remove($this->getParameter('ProfilePicture_directory') . '/' . $character->getProfilPicture());
-           }catch (IOExceptionInterface $e){
-            echo "Une erreur est survenue lors de la suppression de l'image de profil : " . $e->getPath();
-           }
+            } catch (IOExceptionInterface $e) {
+                echo "Une erreur est survenue lors de la suppression de l'image de profil : " . $e->getPath();
+            }
 
             $repo->remove($character, true);
             return $this->redirectToRoute('home_page');
-
-           
         } else {
-            return $this->render('error.html.twig',[
+            return $this->render('error.html.twig', [
                 'message' => 'le personnage n\'existe pas',
                 'url' => '/',
                 'urlname' => 'Page d\'accueil'
             ]);
         }
-
     }
 
     #[Route('/character/edit/{id}',  name: 'app_character_edit', requirements: ['id' => '\d+'])]
@@ -161,37 +156,32 @@ class CharacterController extends AbstractController
 
             $profilePictureFile =  $form->get('profilPicture')->getData();
 
-                if ($profilePictureFile) {
+            if ($profilePictureFile) {
 
-                    $originaleFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = $slugger->slug($originaleFilename);
-                    $newFileName = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
+                $originaleFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originaleFilename);
+                $newFileName = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
 
-                    try {
-						$filesystem = new Filesystem();
+                try {
+                    $filesystem = new Filesystem();
 
-                        $profilePictureFile->move($this->getParameter('ProfilePicture_directory'), $newFileName);
-						$filesystem->remove($this->getParameter('ProfilePicture_directory') . '/' . $oldProfilPicture);
-
-                    } catch (FileException $e) {
-                        return $this->render('error.html.twig', [
-                            'message' => 'Une erreur est survenue pendant l\'upload de l\'image',
-                            'url' => '/character/new',
-                            'urlname' => 'réessayer'
-                        ]);
-                    }
-                    $character->setProfilPicture($newFileName);
-
-					
-				}
-                $repo->save($character, true);
-					return $this->redirectToRoute('app_character_show', array('id' => $id));
-
-		}
-		return $this->render('character/edit.html.twig', [
-			'form' => $form->createView()
-		]);
+                    $profilePictureFile->move($this->getParameter('ProfilePicture_directory'), $newFileName);
+                    $filesystem->remove($this->getParameter('ProfilePicture_directory') . '/' . $oldProfilPicture);
+                } catch (FileException $e) {
+                    return $this->render('error.html.twig', [
+                        'message' => 'Une erreur est survenue pendant l\'upload de l\'image',
+                        'url' => '/character/new',
+                        'urlname' => 'réessayer'
+                    ]);
+                }
+                $character->setProfilPicture($newFileName);
+            }
+            $repo->save($character, true);
+            return $this->redirectToRoute('app_character_show', array('id' => $id));
+        }
+        return $this->render('character/edit.html.twig', [
+            'form' => $form->createView(),
+            'profilPicture' => $this->getParameter('Public_ProfilePicture_directory') . "/" . $character->getProfilPicture()
+        ]);
     }
-
-
 }
