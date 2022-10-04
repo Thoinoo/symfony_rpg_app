@@ -14,5 +14,10 @@ Renommer le fichier .envModel à la racine en .env et le configurer pour la cré
 php bin/console doctrine:database:create
 php bin/console doctrine:migration:migrate
 
+optionnel {
+remplir la BDD avec quelques classes et cométences :
+php bin/console doctrine:fixtures:load
+}
+
 lancer le server :
 symfony server:start

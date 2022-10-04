@@ -53,4 +53,10 @@ class Skill
     {
         return $this->name;
     }
+
+    public function __construct($name = null,$description = null)
+    {
+        $this->name = $name;
+        $this->description = $description;
+    }
 }

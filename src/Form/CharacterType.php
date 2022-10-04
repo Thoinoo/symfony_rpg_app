@@ -31,7 +31,7 @@ class CharacterType extends AbstractType
             ->add('experience', IntegerType::class, ['label' => 'Experience'])
             ->add('health', IntegerType::class, ['label' => 'Points de vie'])
             ->add('Type', null, ['label' => 'Classe'])
-            ->add('skill', null, ['label' => 'Compétences'])
+            ->add('skill', null, ['label' => 'Compétences  (Appuyer sur ctrl pour en sélectionner plusieurs)'])
             ->add('profilPicture', FileType::class, [
                 'label' => 'image de profil',
                 'mapped' => false,

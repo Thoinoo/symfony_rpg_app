@@ -59,7 +59,7 @@ class SkillController extends AbstractController
             return $this->render('error.html.twig', [
                 'message' => 'l\'id n\'existe pas',
                 'url' => '/skill',
-                'urlname' => 'Retour à la page compétances'
+                'urlname' => 'Retour à la page compétences'
             ]);
         }
 
@@ -81,8 +81,8 @@ class SkillController extends AbstractController
         } else {
             return $this->render('error.html.twig', [
                 'message' => 'l\'id n\'existe pas',
-                'url' => '/',
-                'urlname' => 'Page d\'accueil'
+                'url' => '/skill',
+                'urlname' => 'Retour à la page compétences'
             ]);
         }
 
