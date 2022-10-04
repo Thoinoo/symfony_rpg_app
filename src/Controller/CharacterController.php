@@ -61,6 +61,7 @@ class CharacterController extends AbstractController
 
         $form = $this->createForm(CharacterType::class, $character);
         $form->add('Creer', SubmitType::class);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -135,8 +136,8 @@ class CharacterController extends AbstractController
         if ($character = $repo->findOneBy(['id' =>  $id])) {
             $oldProfilPicture = $character->getProfilPicture();
             $form = $this->createForm(CharacterType::class, $character);
-            $form->add('validate', SubmitType::class);
-            $form->add('cancel', SubmitType::class);
+            $form->add('validate', SubmitType::class, ['label' => 'valider']);
+            $form->add('cancel', SubmitType::class, ['label' => 'Annuler']);
         } else {
             return $this->render('error.html.twig', [
                 'message' => "l'id n'éxiste pas",
