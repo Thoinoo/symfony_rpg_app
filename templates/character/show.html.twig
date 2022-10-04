@@ -4,8 +4,7 @@
 {% block body %}
 	<ul>
 
-		<img src="{{ ( asset(profilPicture)) }}">
-
+		<img class="profilePitcure" src="{{ ( asset(profilPicture)) }}">
 
 		<li>Nom :
 			{{ character.name }}</li>
@@ -34,8 +33,8 @@
 			pv</li>
 	</ul>
 
-	<a href="/character/delete/{{ character.id }}">supprimer</a>
-	<a href="/character/edit/{{ character.id }}">modifier</a>
+	<a class="margin1" href="/character/delete/{{ character.id }}">supprimer</a>
+	<a class="margin1" href="/character/edit/{{ character.id }}">modifier</a>
 	<p></p>
 	<a href="/">Home Page</a>
 {% endblock %}

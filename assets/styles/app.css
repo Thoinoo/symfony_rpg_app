@@ -1,0 +1,87 @@
+html {
+    padding: 0;
+    margin: 0;
+}
+
+tr {
+    height: 2rem;
+}
+
+body {
+
+    color: white;
+
+    background-color: lightgray;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 20vh 10vw;
+
+    background-color: rgb(44, 44, 44);
+}
+
+
+table,
+tr,
+td {
+    border: 1px solid white;
+}
+
+tr,
+td {
+
+    padding: 1rem;
+}
+
+button {
+    color: white;
+    background-color: rgb(61, 61, 61);
+    border: 1px solid white;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    padding: 0.3rem;
+}
+
+a {
+    color: white;
+    background-color: rgb(61, 61, 61);
+    border: 1px solid white;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    padding: 0.3rem;
+
+
+}
+
+.profilePitcure {
+    width: 10rem;
+}
+
+
+.margin1 {
+    margin: 1rem;
+}
+
+.margin2 {
+    margin: 2rem;
+}
+
+.margin3 {
+    margin: 3rem;
+}
+
+.margin4 {
+    margin: 4rem;
+}
+
+.margin5 {
+    margin: 5rem;
+}
+
+.margin6 {
+    margin: 6rem;
+}
