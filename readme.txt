@@ -5,6 +5,7 @@ Wamp
 utiliser php 8.1.0
 composer
 symfony
+node
 
 
 Installation des dépendances :
@@ -18,6 +19,10 @@ optionnel {
 remplir la BDD avec quelques classes et cométences :
 php bin/console doctrine:fixtures:load
 }
+
+compiler css / js :
+npm install
+npm run dev
 
 lancer le server :
 symfony server:start
