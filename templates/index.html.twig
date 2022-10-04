@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Mon App RPG !
 			{% endblock %}
 		</title>
 		<link
@@ -18,49 +18,49 @@
 		{% endblock %}
 	</head>
 	<body>
-	{% block body %}
-		<ul>
-			<li>
-				<h3>Personnages</h3>
-				<table>
-					<tr>
-						<td>Nom</td>
-						<td>Niveau</td>
-					</tr>
-					{% for character in characters %}
+		{% block body %}
+			<ul>
+				<li>
+					<h3>Personnages</h3>
+					<table>
 						<tr>
-							<td>{{ character.name }}</td>
-							<td>{{ character.level }}</td>
-							<td>
-								<a type="button" href="character/{{ character.id }}">Afficher les détails</a>
-							</td>
+							<td>Nom</td>
+							<td>Niveau</td>
 						</tr>
-					{% endfor %}
-				</table>
+						{% for character in characters %}
+							<tr>
+								<td>{{ character.name }}</td>
+								<td>{{ character.level }}</td>
+								<td>
+									<a type="button" href="character/{{ character.id }}">Afficher les détails</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
 
-				<ul>
-					<p></p>
-					<li>
-						<a href="/character/new">Ajouter un personnages</a>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<h3>Classes</h3>
-				<ul>
-					<li><a href="/type">Afficher les classes</a></li>
-				</ul>
-			</li>
-			<li>
-				<h3>Compétences</h3>
-				<ul>
-					<li><a href="/skill">Afficher les compétences</a></li>
-				</ul>
-			</li>
-		</ul>
+					<ul>
+						<p></p>
+						<li>
+							<a href="/character/new">Ajouter un personnages</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<h3>Classes</h3>
+					<ul>
+						<li><a href="/type">Afficher les classes</a></li>
+					</ul>
+				</li>
+				<li>
+					<h3>Compétences</h3>
+					<ul>
+						<li><a href="/skill">Afficher les compétences</a></li>
+					</ul>
+				</li>
+			</ul>
 
 
-	{% endblock %}
+		{% endblock %}
 	</body>
 
 </html>

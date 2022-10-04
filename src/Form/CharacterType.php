@@ -17,7 +17,7 @@ class CharacterType extends AbstractType
         $builder
             ->add('name')
             ->add('birthdate', DateType::class, array(
-                'years' => range(date('Y'), date('Y')-500)
+                'years' => range(date('Y'), date('Y') - 500)
             ))
             ->add('description')
             ->add('level')
@@ -32,11 +32,12 @@ class CharacterType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '10000k',
-                        /*   'mimeTypes' => [
-                            'application/jpg',
-                            'application/jpeg',
-                        ],  */
-                        'mimeTypesMessage' => 'veuillez upload une image jpg/jpeg'
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'veuillez upload une image jpg/jpeg/png'
                     ])
                 ]
             ]);
