@@ -1,5 +1,6 @@
+###### Le projet ######
 
-
+Gestionnaire de personnage de RPG avec Symfony
 
 
 ###### Prérequis ######

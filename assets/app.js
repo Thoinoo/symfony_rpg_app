@@ -10,3 +10,14 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+let profilPictureInput = document.getElementById('character_profilPicture');
+let prifilePicture = document.getElementById('ProfilePicture');
+
+profilPictureInput.onchange = evt => {
+    console.log('input changed');
+    const [file] = profilPictureInput.files
+    if (file) {
+        prifilePicture.src = URL.createObjectURL(file)
+    }
+  }

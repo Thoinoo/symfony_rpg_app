@@ -43,7 +43,7 @@ class Character
     private ?int $health = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilPicture = null;
+    private ?string $profilPicture = "default.png";
 
     public function __construct()
     {
