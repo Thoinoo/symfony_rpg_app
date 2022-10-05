@@ -4,6 +4,23 @@
 {% block body %}
 
 
-	{{ form(form) }}
-		<a class="margin1" href="/">Page d'accueil</a>
-	{% endblock %}
+	{{ form_start(form)}}
+	{{ form_row(form.name) }}
+	{{ form_row(form.description) }}
+	{{ form_row(form.birthdate) }}
+	{{ form_row(form.level) }}
+	{{ form_row(form.experience) }}
+	{{ form_row(form.health) }}
+
+	{{ form_row(form.Type) }}
+	{{ form_row(form.skill) }}
+	<img class="profilePitcure" id="ProfilePicture">
+	{{ form_row(form.profilPicture) }}
+
+
+	{{ form_row(form.Validate) }}
+
+	{{ form_end(form)}}
+
+	<a class="margin1" href="/">Page d'accueil</a>
+{% endblock %}

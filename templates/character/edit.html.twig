@@ -2,5 +2,26 @@
 
 
 {% block body %}
-	<img class="profilePitcure" src="{{ ( asset(profilPicture)) }}">
-	{{ form(form) }}{% endblock %}
+
+
+	{{ form_start(form)}}
+	{{ form_row(form.name) }}
+	{{ form_row(form.description) }}
+	{{ form_row(form.birthdate) }}
+	{{ form_row(form.level) }}
+	{{ form_row(form.experience) }}
+	{{ form_row(form.health) }}
+
+	{{ form_row(form.Type) }}
+	{{ form_row(form.skill) }}
+	<img class="profilePitcure" id="ProfilePicture" src="{{ ( asset(profilPicture)) }}">
+	{{ form_row(form.profilPicture) }}
+
+
+	{{ form_row(form.validate) }}
+	{{ form_row(form.cancel) }}
+
+	{{ form_end(form)}}
+
+
+{% endblock %}

@@ -5,20 +5,22 @@ namespace App\Controller;
 use App\Entity\Character;
 use App\Form\CharacterType;
 use App\Repository\CharacterRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
+// use Symfony\Component\HttpFoundation\File\File;
+// use Symfony\Component\Form\Extension\Core\Type\FileType;
+// use Symfony\Component\Asset\Package;
+// use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+// use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 class CharacterController extends AbstractController
 {
@@ -36,10 +38,11 @@ class CharacterController extends AbstractController
 
 
     #[Route('/character/{id}',  name: 'app_character_show', requirements: ['id' => '\d+'])]
-    public function show(CharacterRepository $repo, Request $request, $id): Response
+    public function show(CharacterRepository $repo, Request $request, $id, LoggerInterface $logger): Response
     {
         $character = new Character();
         if (!($character = $repo->findOneBy(['id' => $id]))) {
+            $logger->error('accès /character/id, ID n\'existe pas : ID = ' . $id);
             return $this->render('error.html.twig', [
                 'message' => 'Le personnage n\'existe pas',
                 'url' => '/',
@@ -47,6 +50,7 @@ class CharacterController extends AbstractController
             ]);
         }
 
+        $logger->info('Affichage du personnage : ID :' . $character->getId());
         return $this->render('character/show.html.twig', [
             'character' => $character,
             'profilPicture' => $this->getParameter('Public_ProfilePicture_directory') . "/" . $character->getProfilPicture()
@@ -60,7 +64,7 @@ class CharacterController extends AbstractController
         $character = new Character();
 
         $form = $this->createForm(CharacterType::class, $character);
-        $form->add('Creer', SubmitType::class);
+        $form->add('Validate', SubmitType::class, ['label' => 'Créer']);
 
         $form->handleRequest($request);
 
